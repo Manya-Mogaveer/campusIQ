@@ -1,0 +1,57 @@
+[
+  {
+    "code": "SIT-GATE-01",
+    "name": "Main Entrance Gate Checkpoint",
+    "building_id": null,
+    "floor_level": 0,
+    "associated_node_id": "node-gate-main",
+    "lat": 12.874628,
+    "lng": 74.940035,
+    "description": "Entrance security booth checkpoint on Srinivas Institute Road. (OSM Verified)",
+    "orientation_guidance": "Facing West towards Central Quadrangle and Main Administrative Block."
+  },
+  {
+    "code": "SIT-ADMIN-G01",
+    "name": "Main Block Reception Checkpoint",
+    "building_id": "bldg-main-admin",
+    "floor_level": 0,
+    "associated_node_id": "node-ent-admin-main",
+    "lat": 12.874124,
+    "lng": 74.939525,
+    "description": "Ground floor portico reception desk, Main Building. (OSM Verified)",
+    "orientation_guidance": "Facing North towards Central Quadrangle and Principal's Office stairs."
+  },
+  {
+    "code": "SIT-ECE-G01",
+    "name": "Electronics Building Portico Checkpoint",
+    "building_id": "bldg-ec-ee",
+    "floor_level": 0,
+    "associated_node_id": "node-ent-ece",
+    "lat": 12.873892,
+    "lng": 74.939373,
+    "description": "ECE building lobby adjacent to the accessible entrance ramp. (OSM Verified)",
+    "orientation_guidance": "Facing North towards elevator and VLSI labs."
+  },
+  {
+    "code": "SIT-LIB-G01",
+    "name": "Central Library Turnstile Checkpoint",
+    "building_id": "bldg-central-lib",
+    "floor_level": 0,
+    "associated_node_id": "node-ent-library",
+    "lat": 12.876051,
+    "lng": 74.938588,
+    "description": "Entry circulation desk of the Central Library Block. (OSM Verified)",
+    "orientation_guidance": "Facing West towards digital catalog and periodical racks."
+  },
+  {
+    "code": "SIT-MECH-01",
+    "name": "Mechanical Block Checkpoint",
+    "building_id": "bldg-mech-aero",
+    "floor_level": 0,
+    "associated_node_id": "node-ent-mech",
+    "lat": 12.875413,
+    "lng": 74.939198,
+    "description": "North courtyard entry foyer of the Mechanical Engineering Block. (OSM Verified)",
+    "orientation_guidance": "Facing North towards Workshop and Foundry facilities."
+  }
+]
