@@ -29,6 +29,7 @@ export default function HomeDashboard() {
   const [locations, setLocations] = useState([]);
   const [pathways, setPathways] = useState([]);
   const [facilities, setFacilities] = useState([]);
+  const [navNodes, setNavNodes] = useState([]);
   const [loading, setLoading] = useState(true);
 
   // Quick navigation widget state
@@ -43,61 +44,20 @@ export default function HomeDashboard() {
     const loadDashboardData = async () => {
       try {
         setLoading(true);
-        const [bldgs, locs, edges, facs] = await Promise.all([
+        const [bldgs, locs, edges, facs, nodes] = await Promise.all([
           buildingService.getAll().catch(() => []),
           locationService.getAll().catch(() => []),
           navigationService.getEdges().catch(() => []),
           facilityService.getAll().catch(() => []),
+          navigationService.getNodes().catch(() => []),
         ]);
-        if (bldgs && bldgs.length > 0) setBuildings(bldgs);
-        else {
-          setBuildings([
-            { id: 'bldg-main-admin', name: 'Main Administrative & Academic Block', code: 'SIT-ADMIN', lat: 12.8718, lng: 74.9602, floors_count: 4, has_elevator: true, has_ramp: true, description: "Primary administrative complex housing the Principal's Office and Admissions." },
-            { id: 'bldg-cs-is', name: 'Computer Science & Information Science Block', code: 'SIT-CS', lat: 12.8722, lng: 74.9593, floors_count: 4, has_elevator: true, has_ramp: true, description: "Computational laboratories and Artificial Intelligence research hub." },
-            { id: 'bldg-mech-aero', name: 'Mechanical & Aeronautical Engineering Block', code: 'SIT-MECH', lat: 12.8726, lng: 74.9609, floors_count: 3, has_elevator: false, has_ramp: true, description: "Heavy machinery workshops and design laboratories." },
-            { id: 'bldg-ec-ee', name: 'Electronics & Electrical Engineering Block', code: 'SIT-ECE', lat: 12.8712, lng: 74.9608, floors_count: 3, has_elevator: false, has_ramp: true, description: "VLSI, IoT and robotics testing arenas." },
-            { id: 'bldg-central-lib', name: 'Central Library & Digital Resource Centre', code: 'SIT-LIB', lat: 12.8710, lng: 74.9596, floors_count: 2, has_elevator: true, has_ramp: true, description: "Comprehensive technical archives and quiet study zones." },
-            { id: 'bldg-cafeteria', name: 'Student Centre & Central Cafeteria', code: 'SIT-CAFE', lat: 12.8715, lng: 74.9616, floors_count: 1, has_elevator: false, has_ramp: true, description: "Multi-cuisine student dining hall." },
-            { id: 'bldg-sports-complex', name: 'Indoor Sports Complex & Gymnasium', code: 'SIT-SPORT', lat: 12.8732, lng: 74.9601, floors_count: 2, has_elevator: false, has_ramp: true, description: "Badminton courts and athletic training facilities." },
-          ]);
-        }
-
-        if (locs && locs.length > 0) setLocations(locs);
-        else {
-          setLocations([
-            { id: 'loc-1', name: "Principal's Office", code: 'ADM-01', lat: 12.87182, lng: 74.96022, category: 'admin', is_accessible: true },
-            { id: 'loc-2', name: 'AI & Robotics Research Lab', code: 'CS-LAB-4', lat: 12.87222, lng: 74.95935, category: 'lab', is_accessible: true },
-            { id: 'loc-3', name: 'Golden Jubilee Auditorium', code: 'AUD-01', lat: 12.87188, lng: 74.96015, category: 'academic', is_accessible: true },
-            { id: 'loc-4', name: 'Central Reference Library', code: 'LIB-REF', lat: 12.87102, lng: 74.95962, category: 'library', is_accessible: true },
-            { id: 'loc-5', name: 'Campus Dining Hall', code: 'CAFE-01', lat: 12.87152, lng: 74.96162, category: 'canteen', is_accessible: true },
-            { id: 'loc-6', name: 'Badminton Arena & Gym', code: 'SPT-01', lat: 12.87322, lng: 74.96012, category: 'sports', is_accessible: true },
-            { id: 'loc-7', name: 'Main Campus Security Gate (NH-75)', code: 'GATE-01', lat: 12.8705, lng: 74.9602, category: 'gate', is_accessible: true },
-            { id: 'loc-8', name: 'Campus Health Center', code: 'MED-01', lat: 12.87175, lng: 74.96035, category: 'medical', is_accessible: true },
-          ]);
-        }
-
-        if (edges && edges.length > 0) setPathways(edges);
-        else {
-          setPathways([
-            { id: 'e1', start_coords: [12.8705, 74.9602], end_coords: [12.8710, 74.9602], distance_meters: 55.6, pathway_type: 'paved', is_blocked: false, is_wheelchair_accessible: true },
-            { id: 'e2', start_coords: [12.8710, 74.9602], end_coords: [12.8718, 74.9602], distance_meters: 89.0, pathway_type: 'paved', is_blocked: false, is_wheelchair_accessible: true },
-            { id: 'e3', start_coords: [12.8718, 74.9602], end_coords: [12.8722, 74.9595], distance_meters: 79.2, pathway_type: 'ramp', is_blocked: false, is_wheelchair_accessible: true, has_ramp: true },
-            { id: 'e4', start_coords: [12.8710, 74.9602], end_coords: [12.8710, 74.9596], distance_meters: 65.2, pathway_type: 'walkway', is_blocked: false, is_wheelchair_accessible: true, has_ramp: true },
-            { id: 'e5', start_coords: [12.8718, 74.9602], end_coords: [12.8715, 74.9616], distance_meters: 152.0, pathway_type: 'walkway', is_blocked: false, is_wheelchair_accessible: true },
-          ]);
-        }
-
-        if (facs && facs.length > 0) setFacilities(facs);
-        else {
-          setFacilities([
-            { id: 'f1', name: 'Central Campus Library', status: { status: 'open', open_time: '08:30 AM', close_time: '08:00 PM' } },
-            { id: 'f2', name: 'Srinivas Central Food Court', status: { status: 'open', open_time: '07:30 AM', close_time: '06:00 PM' } },
-            { id: 'f3', name: 'SIT Health & Emergency Care', status: { status: 'open', open_time: '09:00 AM', close_time: '05:00 PM' } },
-            { id: 'f4', name: 'Srinivas Fitness & Sports Arena', status: { status: 'open', open_time: '06:00 AM', close_time: '07:30 PM' } },
-          ]);
-        }
+        setBuildings(bldgs || []);
+        setLocations(locs || []);
+        setPathways(edges || []);
+        setFacilities(facs || []);
+        setNavNodes(nodes || []);
       } catch (err) {
-        console.error('Failed to load dashboard data:', err);
+        console.error('Failed to load dashboard data from backend:', err);
       } finally {
         setLoading(false);
       }
@@ -325,11 +285,20 @@ export default function HomeDashboard() {
                   required
                 >
                   <option value="">Select origin point...</option>
-                  <option value="node-gate-main">Main Entrance Gate (NH-75)</option>
-                  <option value="node-ent-admin-main">Administrative Block Portico</option>
-                  <option value="node-ent-cs-ramp">Computer Science Ramp Entry</option>
-                  <option value="node-ent-library">Central Library Entrance</option>
-                  <option value="node-ent-cafe">Central Cafeteria</option>
+                  {navNodes && navNodes.length > 0 ? (
+                    navNodes.map((n) => (
+                      <option key={n.id} value={n.id}>
+                        {n.name} ({n.node_type || 'point'})
+                      </option>
+                    ))
+                  ) : (
+                    <>
+                      <option value="node-gate-main">Main Entrance Gate (NH-75)</option>
+                      <option value="node-ent-admin-main">Administrative Block Portico</option>
+                      <option value="node-ent-library">Central Library Entrance</option>
+                      <option value="node-ent-cafe">Central Cafeteria</option>
+                    </>
+                  )}
                 </select>
 
                 {gpsNotice && (
@@ -356,12 +325,21 @@ export default function HomeDashboard() {
                   required
                 >
                   <option value="">Select destination...</option>
-                  <option value="node-ent-admin-main">Administrative Block</option>
-                  <option value="node-ent-cs-ramp">CS & IS Engineering Block</option>
-                  <option value="node-ent-mech">Mechanical Engineering Block</option>
-                  <option value="node-ent-library">Central Library</option>
-                  <option value="node-ent-sports">Indoor Sports Complex</option>
-                  <option value="node-ent-cafe">Dining Hall & Canteen</option>
+                  {navNodes && navNodes.length > 0 ? (
+                    navNodes.map((n) => (
+                      <option key={n.id} value={n.id}>
+                        {n.name} ({n.node_type || 'point'})
+                      </option>
+                    ))
+                  ) : (
+                    <>
+                      <option value="node-ent-admin-main">Administrative Block</option>
+                      <option value="node-ent-mech">Mechanical Engineering Block</option>
+                      <option value="node-ent-library">Central Library</option>
+                      <option value="node-ent-sports">Indoor Sports Complex</option>
+                      <option value="node-ent-cafe">Dining Hall & Canteen</option>
+                    </>
+                  )}
                 </select>
               </div>
 
